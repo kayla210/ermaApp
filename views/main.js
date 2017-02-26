@@ -4,26 +4,29 @@ var directionsService;
 var directionsDisplay;
 var styledMapType;
 var drawingManager;
+var currentLocation;
+var infowindow;
+var marker;
+var defaultIcon;
 
+	// function callback( results, status){
+	// 	console.log(results);
+	// 	for (var i = 0; i < results.length; i++) {
+	// 		var marker = new google.maps.Marker({
+	// 		position: results[i].geometry.location,
+	// 		map: map,
+	// 		icon: results[i].icon
+	// 	});
+	// 	}
 
-	function callback( results, status){
-		console.log(results);
-		for (var i = 0; i < results.length; i++) {
-			var marker = new google.maps.Marker({
-			position: results[i].geometry.location,
-			map: map,
-			icon: results[i].icon
-		});
-		}
-
-	}
-	function performSearch(){
-		var request = {
-			bounds: map.getBounds(),
-			name: "McDonald's"
-		}
-		service.nearbySearch(request, callback);
-	}
+	// }
+	// function performSearch(){
+	// 	var request = {
+	// 		bounds: map.getBounds(),
+	// 		name: "McDonald's"
+	// 	}
+	// 	service.nearbySearch(request, callback);
+	// }
 	function calculateAndDisplayRoute(directionsService, directionsDisplay) {
         directionsService.route({
           origin: document.getElementById('from').value,
@@ -42,10 +45,44 @@ var drawingManager;
           }
         });
       }
-    function submit(){
-    	console.log(directionsService);
-    	console.log(directionsDisplay);
-       	calculateAndDisplayRoute(directionsService, directionsDisplay);
+   function addPoint(message){
+    defaultIcon= makeMarkerIcon('0091ff');
+    marker = new google.maps.Marker({
+      //marker.Marker({
+      position: currentLocation,
+      map: map,
+      icon: defaultIcon,
+      title: 'position',
+      animation: google.maps.Animation.DROP
+    });
+    //marker.setMap(map);
+    console.log(marker);
+    infowindow = new google.maps.InfoWindow({
+      //infowindow.InfoWindow({
+      content:message,
+      position: marker.position
+      });
+      marker.addListener('click', function() {
+        infowindow.open(map, marker);
+      });
+      marker.addListener('mouseover',function(){
+        this.setIcon(highlightedIcon);
+      });
+      marker.addListener('mouseout',function(){
+        this.setIcon(defaultIcon);
+      });
+      //marker.setMap(map);
+   }
+    function submit1(){
+    	//console.log(directionsService);
+    	//console.log(directionsDisplay);
+      //calculateAndDisplayRoute(directionsService, directionsDisplay);
+       console.log("submiting the form");
+       var inputmessage = document.getElementById('comment').value;
+       console.log(inputmessage);
+       addPoint(inputmessage);
+       console.log("done adding");
+       marker.setMap(map);
     }
     function styleMap(){
     	styledMapType = new google.maps.StyledMapType(
@@ -161,26 +198,7 @@ var drawingManager;
             ],
             {name: 'Styled Map'});
     }
-  function drawingMethod(){
-    var drawingManager = new google.maps.drawing.DrawingManager({
-    drawingMode: google.maps.drawing.OverlayType.MARKER,
-    drawingControl: true,
-    drawingControlOptions: {
-      position: google.maps.ControlPosition.TOP_CENTER,
-      drawingModes: ['marker', 'circle', 'polygon', 'polyline', 'rectangle']
-    },
-    markerOptions: {icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'},
-    circleOptions: {
-      fillColor: '#ffff00',
-      fillOpacity: 1,
-      strokeWeight: 5,
-      clickable: false,
-      editable: true,
-      zIndex: 1
-    }
-  });
-    return drawingManager;
-  }
+
   function makeMarkerIcon(markerColor){
      var markerImage = new google.maps.MarkerImage(
       'http://chart.googleapis.com/chart?chst=d_map_spin&chld=1.15|0|'+ markerColor +'|40|_|%E2%80%A2',
@@ -195,13 +213,15 @@ var drawingManager;
 		console.log(location);
 		directionsService = new google.maps.DirectionsService();
 		directionsDisplay = new google.maps.DirectionsRenderer();
+    //marker = new google.maps.Marker();
+    //infowindow = new google.maps.InfoWindow();
 
 //     $.getScript('/js/style.js', function () {          
 //      styledMapType = styleMap();  
 // });  
 		styleMap();
 		var currentLocation = new google.maps.LatLng(location.coords.latitude, location.coords.longitude);
-    var defaultIcon= makeMarkerIcon('0091ff');
+    //defaultIcon= makeMarkerIcon('0091ff');
     var highlightedIcon = makeMarkerIcon('FFFF24');
 
 		var mapOptions ={
@@ -216,35 +236,34 @@ var drawingManager;
 	
 		map = new google.maps.Map(document.getElementById("map"), mapOptions);
 		map.mapTypes.set('styled_map', styledMapType);
-        map.setMapTypeId('styled_map');
+    map.setMapTypeId('styled_map');
 
-		var marker = new google.maps.Marker({
-			position: currentLocation,
-			map: map,
-      icon: defaultIcon,
-			title: 'position',
-      animation: google.maps.Animation.DROP
-		});
+		// var marker = new google.maps.Marker({
+		// 	position: currentLocation,
+		// 	map: map,
+  //     icon: defaultIcon,
+		// 	title: 'position',
+  //     animation: google.maps.Animation.DROP
+		// });
 
-		var infowindow = new google.maps.InfoWindow({
-			content:'Lakeshore Ridge',
-    	position: marker.position
-  		});
-  		marker.addListener('click', function() {
-   			infowindow.open(map, marker);
-  		});
-      marker.addListener('mouseover',function(){
-        this.setIcon(highlightedIcon);
-      });
-      marker.addListener('mouseout',function(){
-        this.setIcon(defaultIcon);
-      });
+		// var infowindow = new google.maps.InfoWindow({
+		// 	content:'Lakeshore Ridge',
+  //   	position: marker.position
+  // 		});
+  // 		marker.addListener('click', function() {
+  //  			infowindow.open(map, marker);
+  // 		});
+  //     marker.addListener('mouseover',function(){
+  //       this.setIcon(highlightedIcon);
+  //     });
+  //     marker.addListener('mouseout',function(){
+  //       this.setIcon(defaultIcon);
+  //     });
 		//service = new google.maps.places.PlacesService(map);
 		//google.maps.event.addListenerOnce(map, 'bounds_changed', performSearch);
-    var drawingManager = drawingMethod();
-    console.log(drawingManager);
-    drawingManager.setMap(map);
-		directionsDisplay.setMap(map);
+    //drawingManager.setMap(map);
+		//directionsDisplay.setMap(map);
+    //marker.setMap(map);
 	}
 
 	$(document).ready(function()
