@@ -203,6 +203,7 @@ var drawingManager;
 		var currentLocation = new google.maps.LatLng(location.coords.latitude, location.coords.longitude);
     var defaultIcon= makeMarkerIcon('0091ff');
     var highlightedIcon = makeMarkerIcon('FFFF24');
+    var post = document.getElementById("comment").value;
 
 		var mapOptions ={
 			center: currentLocation,
@@ -227,7 +228,7 @@ var drawingManager;
 		});
 
 		var infowindow = new google.maps.InfoWindow({
-			content:'Lakeshore Ridge',
+			content: post,
     	position: marker.position
   		});
   		marker.addListener('click', function() {
