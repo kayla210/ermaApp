@@ -18,7 +18,7 @@
         <div id="nameInput" class="input-group-lg center-block helloInput">
             <p class="lead">What is your name?</p>
             <input id="user_name" type="text" class="form-control" placeholder="name" aria-describedby="sizing-addon1" value="" />
-			 <label for="comment">Comment:</label>
+			 <label for="comment">Comment1111:</label>
 				<textarea class="form-control" rows="5" id="comment"></textarea>
 		</div>
         <p id="response" class="lead text-center"></p>
@@ -32,90 +32,90 @@
 
     <script>
     	//Submit data when enter key is pressed
-        $('#comment').keydown(function(e) {
-        	var name = $('#comment').val();
-			var comment =  ;
-            if (e.which == 13 && name.length > 0) { //catch Enter key
-            	//POST request to API to create a new visitor entry in the database
-                $.ajax({
-				  method: "POST",
-				  url: "./api/visitors",
-				  contentType: "application/json",
-				  data: JSON.stringify({name: name })
-				})
-                .done(function(data) {
-                    $('#response').html(data);
-                    $('#nameInput').hide();
-                    getNames();
-                });
-            }
-        });
+ //        $('#comment').keydown(function(e) {
+ //        	var name = $('#comment').val();
+	// 		var comment =  ;
+ //            if (e.which == 13 && name.length > 0) { //catch Enter key
+ //            	//POST request to API to create a new visitor entry in the database
+ //                $.ajax({
+	// 			  method: "POST",
+	// 			  url: "./api/visitors",
+	// 			  contentType: "application/json",
+	// 			  data: JSON.stringify({name: name })
+	// 			})
+ //                .done(function(data) {
+ //                    $('#response').html(data);
+ //                    $('#nameInput').hide();
+ //                    getNames();
+ //                });
+ //            }
+ //        });
 
-        //Retreive all the visitors from the database
-        function getNames(){
-          $.get("./api/visitors")
-              .done(function(data) {
-                  if(data.length > 0) {
-                    $('#databaseNames').html("Database contents: " + JSON.stringify(data));
-                  }
-              });
-          }
+ //        //Retreive all the visitors from the database
+ //        function getNames(){
+ //          $.get("./api/visitors")
+ //              .done(function(data) {
+ //                  if(data.length > 0) {
+ //                    $('#databaseNames').html("Database contents: " + JSON.stringify(data));
+ //                  }
+ //              });
+ //          }
 
-          //Call getNames on page load.
-          getNames();
+ //          //Call getNames on page load.
+ //          getNames();
 
-	function initMap() {
-		var loc = {};
-		loc.lat = google.loader.ClientLocation.latitude;
-        loc.lng = google.loader.ClientLocation.longitude;
-       var latlng = new google.maps.LatLng(loc.lat, loc.lng);
+	// function initMap() {
+	// 	var loc = {};
+	// 	loc.lat = google.loader.ClientLocation.latitude;
+ //        loc.lng = google.loader.ClientLocation.longitude;
+ //       var latlng = new google.maps.LatLng(loc.lat, loc.lng);
 	   
-	    geocoder.geocode({'latLng': latlng}, function(results, status) {
-            if(status == google.maps.GeocoderStatus.OK) {
-                alert(results[0]['formatted_address']);
-            };
-        });
+	//     geocoder.geocode({'latLng': latlng}, function(results, status) {
+ //            if(status == google.maps.GeocoderStatus.OK) {
+ //                alert(results[0]['formatted_address']);
+ //            };
+ //        });
 
-        var bounds = {
-          north: -25.363882,
-          south: -31.203405,
-          east: 131.044922,
-          west: 125.244141
-        };
+ //        var bounds = {
+ //          north: -25.363882,
+ //          south: -31.203405,
+ //          east: 131.044922,
+ //          west: 125.244141
+ //        };
 
-        // Display the area between the location southWest and northEast.
-        map.fitBounds(bounds);
+ //        // Display the area between the location southWest and northEast.
+ //        map.fitBounds(bounds);
 
-        // Add 5 markers to map at random locations.
-        // For each of these markers, give them a title with their index, and when
-        // they are clicked they should open an infowindow with text from a secret
-        // message.
-        var secretMessages = document.getElementById("comment").innerHTML;
-        var lngSpan = bounds.east - bounds.west;
-        var latSpan = bounds.north - bounds.south;
-        for (var i = 0; i < secretMessages.length; ++i) {
-          var marker = new google.maps.Marker({
-            position: {
-              lat: bounds.south + latSpan * Math.random(),
-              lng: bounds.west + lngSpan * Math.random()
-            },
-            map: map
-          });
-          attachSecretMessage(marker, secretMessages[i]);
-        }
-      }
+ //        // Add 5 markers to map at random locations.
+ //        // For each of these markers, give them a title with their index, and when
+ //        // they are clicked they should open an infowindow with text from a secret
+ //        // message.
+ //        var secretMessages = document.getElementById("comment").innerHTML;
+ //        var lngSpan = bounds.east - bounds.west;
+ //        var latSpan = bounds.north - bounds.south;
+ //        for (var i = 0; i < secretMessages.length; ++i) {
+ //          var marker = new google.maps.Marker({
+ //            position: {
+ //              lat: bounds.south + latSpan * Math.random(),
+ //              lng: bounds.west + lngSpan * Math.random()
+ //            },
+ //            map: map
+ //          });
+ //          attachSecretMessage(marker, secretMessages[i]);
+ //        }
+ //      }
 
-      // Attaches an info window to a marker with the provided message. When the
-      // marker is clicked, the info window will open with the secret message.
-      function attachSecretMessage(marker, secretMessage) {
-        var infowindow = new google.maps.InfoWindow({
-          content: secretMessage
-        });
+ //      // Attaches an info window to a marker with the provided message. When the
+ //      // marker is clicked, the info window will open with the secret message.
+ //      function attachSecretMessage(marker, secretMessage) {
+ //        var infowindow = new google.maps.InfoWindow({
+ //          content: secretMessage
+ //        });
 
-         marker.addListener('click', function() {
-          infowindow.open(marker.get('map'), marker);
-        });
-      }
+ //         marker.addListener('click', function() {
+ //          infowindow.open(marker.get('map'), marker);
+ //        });
+ //      }
     </script>
 </body>
 
