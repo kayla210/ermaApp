@@ -239,13 +239,13 @@ var defaultIcon;
 		map.mapTypes.set('styled_map', styledMapType);
     map.setMapTypeId('styled_map');
 
-		// var marker = new google.maps.Marker({
-		// 	position: currentLocation,
-		// 	map: map,
-  //     icon: defaultIcon,
-		// 	title: 'position',
-  //     animation: google.maps.Animation.DROP
-		// });
+		var marker = new google.maps.Marker({
+		position: currentLocation,
+	  map: map,
+    icon: defaultIcon,
+		title: 'position',
+    animation: google.maps.Animation.DROP
+		});
 
 		var infowindow = new google.maps.InfoWindow({
 			content: post,
