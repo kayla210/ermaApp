@@ -8,6 +8,7 @@ var currentLocation;
 var infowindow;
 var marker;
 var defaultIcon;
+var inputmessage;
 
 	// function callback( results, status){
 	// 	console.log(results);
@@ -45,7 +46,7 @@ var defaultIcon;
           }
         });
       }
-   function addPoint(message){
+   function addPoint(){
     defaultIcon= makeMarkerIcon('0091ff');
     marker = new google.maps.Marker({
       //marker.Marker({
@@ -57,33 +58,20 @@ var defaultIcon;
     });
     //marker.setMap(map);
     console.log(marker);
-    infowindow = new google.maps.InfoWindow({
-      //infowindow.InfoWindow({
-      content:message,
-      position: marker.position
-      });
-      marker.addListener('click', function() {
-        infowindow.open(map, marker);
-      });
-      marker.addListener('mouseover',function(){
-        this.setIcon(highlightedIcon);
-      });
-      marker.addListener('mouseout',function(){
-        this.setIcon(defaultIcon);
-      });
-      //marker.setMap(map);
+    
+    //marker.setMap(map);
    }
-    function submit1(){
-    	//console.log(directionsService);
-    	//console.log(directionsDisplay);
-      //calculateAndDisplayRoute(directionsService, directionsDisplay);
-       console.log("submiting the form");
-       var inputmessage = document.getElementById('comment').value;
-       console.log(inputmessage);
-       addPoint(inputmessage);
-       console.log("done adding");
-       marker.setMap(map);
-    }
+    // function submit1(){
+    // 	//console.log(directionsService);
+    // 	//console.log(directionsDisplay);
+    //   //calculateAndDisplayRoute(directionsService, directionsDisplay);
+    //    console.log("submiting the form");
+    //    inputmessage = document.getElementById('comment').value;
+    //    console.log(inputmessage);
+    //    addPoint();
+    //    console.log("done adding");
+    //    marker.setMap(map);
+    // }
     function styleMap(){
     	styledMapType = new google.maps.StyledMapType(
             [
@@ -210,18 +198,16 @@ var defaultIcon;
   } 
 
 	function initialise(location){
+    var marker;
 		console.log(location);
 		directionsService = new google.maps.DirectionsService();
 		directionsDisplay = new google.maps.DirectionsRenderer();
     //marker = new google.maps.Marker();
     //infowindow = new google.maps.InfoWindow();
 
-//     $.getScript('/js/style.js', function () {          
-//      styledMapType = styleMap();  
-// });  
 		styleMap();
 		var currentLocation = new google.maps.LatLng(location.coords.latitude, location.coords.longitude);
-    //defaultIcon= makeMarkerIcon('0091ff');
+    defaultIcon= makeMarkerIcon('0091ff');
     var highlightedIcon = makeMarkerIcon('FFFF24');
 
 		var mapOptions ={
@@ -237,6 +223,7 @@ var defaultIcon;
 		map = new google.maps.Map(document.getElementById("map"), mapOptions);
 		map.mapTypes.set('styled_map', styledMapType);
     map.setMapTypeId('styled_map');
+    // inputmessage = document.getElementById('comment').value;
 
 		// var marker = new google.maps.Marker({
 		// 	position: currentLocation,
@@ -247,18 +234,43 @@ var defaultIcon;
 		// });
 
 		// var infowindow = new google.maps.InfoWindow({
-		// 	content:'Lakeshore Ridge',
+		// 	content:inputmessage,
   //   	position: marker.position
   // 		});
-  // 		marker.addListener('click', function() {
-  //  			infowindow.open(map, marker);
-  // 		});
-  //     marker.addListener('mouseover',function(){
-  //       this.setIcon(highlightedIcon);
-  //     });
-  //     marker.addListener('mouseout',function(){
-  //       this.setIcon(defaultIcon);
-  //     });
+  		
+        document.getElementById("submitdata").addEventListener("click", function(){
+        //document.getElementById("demo").innerHTML = "Hello World";
+        inputmessage = document.getElementById('comment').value;
+        marker = new google.maps.Marker({
+          position: currentLocation,
+          map: map,
+          icon: defaultIcon,
+          title: 'position',
+          animation: google.maps.Animation.DROP
+    });
+        infowindow = new google.maps.InfoWindow({
+          content:inputmessage,
+          position: marker.position
+      });
+        marker.addListener('click', function() {
+        infowindow.open(map, marker);
+      });
+      marker.addListener('mouseover',function(){
+        this.setIcon(highlightedIcon);
+      });
+      marker.addListener('mouseout',function(){
+        this.setIcon(defaultIcon);
+      });
+      });
+    //     marker.addListener('click', function() {
+   	// 		infowindow.open(map, marker);
+  		// });
+    //   marker.addListener('mouseover',function(){
+    //     this.setIcon(highlightedIcon);
+    //   });
+    //   marker.addListener('mouseout',function(){
+    //     this.setIcon(defaultIcon);
+    //   });
 		//service = new google.maps.places.PlacesService(map);
 		//google.maps.event.addListenerOnce(map, 'bounds_changed', performSearch);
     //drawingManager.setMap(map);
