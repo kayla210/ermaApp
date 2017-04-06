@@ -209,6 +209,7 @@ var inputmessage;
 		var currentLocation = new google.maps.LatLng(location.coords.latitude, location.coords.longitude);
     defaultIcon= makeMarkerIcon('0091ff');
     var highlightedIcon = makeMarkerIcon('FFFF24');
+    var post = document.getElementById("comment").value;
 
 		var mapOptions ={
 			center: currentLocation,
@@ -225,14 +226,27 @@ var inputmessage;
     map.setMapTypeId('styled_map');
     // inputmessage = document.getElementById('comment').value;
 
-		// var marker = new google.maps.Marker({
-		// 	position: currentLocation,
-		// 	map: map,
-  //     icon: defaultIcon,
-		// 	title: 'position',
-  //     animation: google.maps.Animation.DROP
-		// });
+		var marker = new google.maps.Marker({
+		position: currentLocation,
+	  map: map,
+    icon: defaultIcon,
+		title: 'position',
+    animation: google.maps.Animation.DROP
+		});
 
+		var infowindow = new google.maps.InfoWindow({
+			content: post,
+    	position: marker.position
+  		});
+  	//	marker.addListener('click', function() {
+   		//	infowindow.open(map, marker);
+  		//});
+      //marker.addListener('mouseover',function(){
+        //this.setIcon(highlightedIcon);
+      //});
+      //marker.addListener('mouseout',function(){
+        //this.setIcon(defaultIcon);
+      //});
 		// var infowindow = new google.maps.InfoWindow({
 		// 	content:inputmessage,
   //   	position: marker.position
@@ -262,20 +276,16 @@ var inputmessage;
         this.setIcon(defaultIcon);
       });
       });
-    //     marker.addListener('click', function() {
-   	// 		infowindow.open(map, marker);
-  		// });
-    //   marker.addListener('mouseover',function(){
-    //     this.setIcon(highlightedIcon);
-    //   });
-    //   marker.addListener('mouseout',function(){
-    //     this.setIcon(defaultIcon);
-    //   });
+
 		//service = new google.maps.places.PlacesService(map);
 		//google.maps.event.addListenerOnce(map, 'bounds_changed', performSearch);
     //drawingManager.setMap(map);
 		//directionsDisplay.setMap(map);
     //marker.setMap(map);
+    var drawingManager = drawingMethod();
+    console.log(drawingManager);
+    drawingManager.setMap(map);
+    directionsDisplay.setMap(map);
 	}
 
 	$(document).ready(function()

@@ -1,7 +1,7 @@
 var express = require("express");
 var app = express();
 var cfenv = require("cfenv");
-var bodyParser = require('body-parser')
+var bodyParser = require('body-parser');
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -19,7 +19,7 @@ app.post("/api/visitors", function (request, response) {
   var userName = request.body.name;
   if(!mydb) {
     console.log("No database.");
-    response.send("Post by" + userName + "made!");
+    response.send("Post by " + userName + " made!");
     return;
   }
   // insert the username as a document
@@ -62,7 +62,7 @@ app.get("/api/visitors", function (request, response) {
 });
 
 
-// load local VCAP configuration  and service credentials
+// load local VCAP configuration and service credentials
 var vcapLocal;
 try {
   vcapLocal = require('./vcap-local.json');
