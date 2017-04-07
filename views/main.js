@@ -282,10 +282,10 @@ var inputmessage;
     //drawingManager.setMap(map);
 		//directionsDisplay.setMap(map);
     //marker.setMap(map);
-    var drawingManager = drawingMethod();
-    console.log(drawingManager);
-    drawingManager.setMap(map);
-    directionsDisplay.setMap(map);
+    // var drawingManager = drawingMethod();
+    // console.log(drawingManager);
+    // drawingManager.setMap(map);
+    // directionsDisplay.setMap(map);
 	}
 
 	$(document).ready(function()
